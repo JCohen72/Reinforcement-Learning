@@ -124,7 +124,3 @@ This will compare agents with different epsilon values, plotting both the averag
 This repository is licensed under the MIT License. See the `LICENSE` file for more details.
 
 ---
-
-By using these scripts, you can demonstrate your knowledge of reinforcement learning, simulation techniques, and efficient coding practices like parallel processing.
-
----
