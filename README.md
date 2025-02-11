@@ -1,126 +1,264 @@
-# Reinforcement-Learning
----
-# 10-Armed Bandit Simulations
+# Reinforcement Learning
 
-This repository contains Python implementations of the 10-armed bandit problem, focusing on reinforcement learning concepts such as optimistic initial values and epsilon-greedy action selection. The code is modular, implements good coding practices, and leverages parallel processing for computational efficiency.
+This repository contains 14 Jupyter Notebook projects that implement a wide range of reinforcement learning (RL) experiments—from classical bandit simulations and gridworld dynamic programming to advanced methods like state aggregation in TD learning and policy gradient baselines. The notebooks include detailed inline comments and docstrings, making them a practical resource for learning and research.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Files](#files)
-- [Requirements](#requirements)
+- [Repository Structure](#repository-structure)
+  - [Editor Configurations](#editor-configurations)
+  - [License](#license)
+- [Project Notebooks](#project-notebooks)
+  - [UCB_vs_epsilon_greedy_bandit.ipynb](#ucb_vs_epsilon_greedy_banditipynb)
+  - [bandit_algorithm_parameter_study.ipynb](#bandit_algorithm_parameter_studyipynb)
+  - [cliff_walking_sarsa_qlearning.ipynb](#cliff_walking_sarsa_qlearningipynb)
+  - [epsilon_greedy_bandit.ipynb](#epsilon_greedy_banditipynb)
+  - [gridworld_policy_evaluation_basic.ipynb](#gridworld_policy_evaluation_basicipynb)
+  - [gridworld_value_iteration_basic.ipynb](#gridworld_value_iteration_basicipynb)
+  - [mdp_policy_iteration_gridworld.ipynb](#mdp_policy_iteration_gridworldipynb)
+  - [n_step_td_random_walk_plot.ipynb](#n_step_td_random_walk_plotipynb)
+  - [off_policy_mc_simulation.ipynb](#off_policy_mc_simulationipynb)
+  - [optimistic_vs_epsilon_greedy_bandit.ipynb](#optimistic_vs_epsilon_greedy_banditipynb)
+  - [q_learning_vs_double_q_learning.ipynb](#q_learning_vs_double_q_learningipynb)
+  - [td_mc_random_walk_simulation.ipynb](#td_mc_random_walk_simulationipynb)
+  - [state_aggregation_in_large_scale_td.ipynb](#state_aggregation_in_large_scale_tdipynb)
+  - [reinforce_short_corridor_baseline_comparison.ipynb](#reinforce_short_corridor_baseline_comparisonipynb)
+- [Installation & Requirements](#installation--requirements)
 - [Usage](#usage)
-- [Visualizations](#visualizations)
-- [License](#license)
+- [License Details](#license-details)
 
-## Introduction
+---
 
-The 10-armed bandit problem is a classic reinforcement learning problem where an agent must learn to select the optimal action from multiple possible actions (arms) based on rewards. This repository includes two Python scripts:
+## Repository Structure
 
-1. **Optimistic Initial Values Simulation**: Demonstrates the effect of optimistic initial action-value estimates on exploration and performance.
-2. **Epsilon-Greedy Agents Simulation**: Implements epsilon-greedy agents with different exploration rates and compares their performance in terms of rewards and optimal action selection.
+### Editor Configurations
 
-Both simulations use parallel processing to run multiple independent trials efficiently, and they provide visualizations of the results.
+- **.vscode/**  
+  Contains VS Code settings and launch configurations to ensure a consistent development environment. (Not part of the core experiments.)
 
-## Files
+### License
 
-### 1. `optimistic_initial_values.py`
+- **LICENSE**  
+  The repository is distributed under the MIT License. See the LICENSE file for details on reuse, modification, and distribution.
 
-#### Description:
+---
 
-This script simulates the effect of optimistic initial values on the 10-armed bandit problem, comparing two methods:
-- **Optimistic Greedy (Q₁=5, ε=0)**: The agent starts with an optimistic estimate of the action values (Q₁=5), encouraging exploration.
-- **Realistic ε-Greedy (Q₁=0, ε=0.1)**: The agent starts with a realistic estimate of zero for the action values, combined with an exploration strategy (ε=0.1).
+## Project Notebooks
 
-#### Features:
-- Uses a constant step-size parameter (α=0.1) to update action-value estimates.
-- Implements parallel processing to simulate multiple runs, improving computational efficiency.
-- Visualizes the percentage of optimal action selections over time for both methods.
+Below is a brief description of each of the 14 notebooks based on my detailed review:
 
-#### Code Overview:
-- **Bandit Class**: Represents the environment, where each arm has a randomly assigned true value.
-- **Agent Class**: Implements an agent that uses either the optimistic or epsilon-greedy strategy.
-- **Simulation**: Runs multiple independent trials in parallel to compute the percentage of optimal actions selected by the agents.
-- **Plotting**: Generates line plots comparing the performance of both methods over time.
+### UCB_vs_epsilon_greedy_bandit.ipynb
 
-### 2. `epsilon_greedy_bandit.py`
+**Purpose:**  
+Compares two action selection strategies for the multi-armed bandit problem:
+- **Upper Confidence Bound (UCB):** Selects actions based on estimated rewards and uncertainty.
+- **Epsilon-Greedy:** Uses a fixed exploration rate (ε) to occasionally choose random actions.
 
-#### Description:
+**Details:**  
+- The notebook sets up a 10-armed bandit environment.
+- It simulates multiple runs to plot average reward curves and the percentage of optimal actions.
+- Code is modular, with clearly defined functions for updating value estimates and selecting actions.
 
-This script compares the performance of epsilon-greedy agents with different exploration rates (ε=0, 0.01, 0.1) in the 10-armed bandit problem. The agents are evaluated based on:
-- Average rewards obtained over time.
-- Percentage of times the optimal action is selected.
+---
 
-#### Features:
-- Supports parallel execution of multiple simulation runs for improved performance.
-- Visualizes the average reward and percentage of optimal action selection for each epsilon value over time.
-- Implements good coding practices, such as modularity and detailed docstrings.
+### bandit_algorithm_parameter_study.ipynb
 
-#### Code Overview:
-- **TenArmedBandit Class**: Represents the multi-armed bandit environment.
-- **EpsilonGreedyAgent Class**: Implements an agent that uses an epsilon-greedy strategy to balance exploration and exploitation.
-- **Single Run Simulation**: Simulates multiple agents with different epsilon values interacting with the bandit, and records rewards and optimal action selections.
-- **Parallel Processing**: Runs multiple independent trials using `joblib.Parallel` for efficiency.
-- **Plotting**: Displays two plots:
-  - Average reward vs. time steps.
-  - Percentage of optimal actions selected vs. time steps.
+**Purpose:**  
+Performs a systematic parameter study for bandit algorithms.
 
-## Requirements
+**Details:**  
+- Explores the impact of hyperparameters (e.g., learning rate, exploration constants) on performance.
+- Contains multiple experiments with different parameter settings.
+- Generates plots showing trends in rewards and optimal action selection across trials.
 
-To run these simulations, you need the following Python libraries:
+---
 
-- `numpy`
-- `matplotlib`
-- `joblib`
+### cliff_walking_sarsa_qlearning.ipynb
 
-You can install the required dependencies using `pip`:
+**Purpose:**  
+Implements and compares on-policy SARSA with off-policy Q-learning using the cliff-walking environment.
 
-```bash
-pip install numpy matplotlib joblib
-```
+**Details:**  
+- The notebook simulates a gridworld with a “cliff” that imposes a high penalty.
+- It visualizes how each algorithm converges to a policy while avoiding the cliff.
+- Detailed commentary explains the differences between SARSA and Q-learning in risky environments.
+
+---
+
+### epsilon_greedy_bandit.ipynb
+
+**Purpose:**  
+Focuses on the epsilon-greedy algorithm for solving the 10-armed bandit problem.
+
+**Details:**  
+- Investigates how different values of ε affect learning performance.
+- Provides visual comparisons of average reward and optimal action frequency.
+- The code is structured to allow easy adjustment of exploration parameters.
+
+---
+
+### gridworld_policy_evaluation_basic.ipynb
+
+**Purpose:**  
+Implements basic policy evaluation in a gridworld environment.
+
+**Details:**  
+- Uses iterative dynamic programming to compute state-value functions for a fixed policy.
+- Contains visualizations of the gridworld with state values.
+- Code includes clear docstrings explaining the evaluation process.
+
+---
+
+### gridworld_value_iteration_basic.ipynb
+
+**Purpose:**  
+Demonstrates the value iteration algorithm to compute the optimal value function in a gridworld.
+
+**Details:**  
+- Applies the Bellman optimality equation iteratively.
+- Includes convergence plots and visualizations of the derived optimal policy.
+- Modular structure allows for easy modifications of the gridworld parameters.
+
+---
+
+### mdp_policy_iteration_gridworld.ipynb
+
+**Purpose:**  
+Uses policy iteration to solve a gridworld Markov Decision Process (MDP).
+
+**Details:**  
+- Alternates between policy evaluation and policy improvement.
+- Provides detailed explanations and plots showing policy convergence.
+- Compares the performance of policy iteration with value iteration methods.
+
+---
+
+### n_step_td_random_walk_plot.ipynb
+
+**Purpose:**  
+Explores n-step Temporal Difference (TD) learning in a random walk scenario.
+
+**Details:**  
+- Evaluates how varying the “n” parameter in TD learning affects value estimation.
+- Compares n-step TD with one-step TD and Monte Carlo methods.
+- Visual plots illustrate learning curves and the impact of n on convergence.
+
+---
+
+### off_policy_mc_simulation.ipynb
+
+**Purpose:**  
+Implements off-policy Monte Carlo (MC) simulation using importance sampling.
+
+**Details:**  
+- Demonstrates the process of learning a target policy from data generated by a different behavior policy.
+- Provides insights into variance reduction and convergence issues in off-policy learning.
+- Uses clear visualizations and commentary to explain importance sampling.
+
+---
+
+### optimistic_vs_epsilon_greedy_bandit.ipynb
+
+**Purpose:**  
+Compares two exploration strategies in the bandit problem:
+- **Optimistic Initial Values:** Begins with high initial estimates to drive early exploration.
+- **Epsilon-Greedy:** Balances exploration with a fixed probability of random action.
+
+**Details:**  
+- Runs parallel simulations to compare both strategies.
+- Plots show the effects on average reward and the frequency of optimal action selection.
+- Code includes detailed explanations of the trade-offs involved.
+
+---
+
+### q_learning_vs_double_q_learning.ipynb
+
+**Purpose:**  
+Contrasts standard Q-learning with Double Q-learning to mitigate overestimation bias.
+
+**Details:**  
+- Implements both algorithms in the same experimental setup.
+- Directly compares learning curves, showing improvements in double Q-learning.
+- Discussion in the notebook explains the theory behind reducing bias through decoupling action selection and evaluation.
+
+---
+
+### td_mc_random_walk_simulation.ipynb
+
+**Purpose:**  
+Compares Temporal Difference (TD) learning and Monte Carlo (MC) methods on a random walk problem.
+
+**Details:**  
+- Provides a side-by-side analysis of value function approximations using TD and MC.
+- Visualizations highlight the convergence behavior and variance differences between the two methods.
+- Code is structured to facilitate easy experimentation with different parameters.
+
+---
+
+### state_aggregation_in_large_scale_td.ipynb
+
+**Purpose:**  
+Investigates the use of state aggregation techniques in large-scale TD learning.
+
+**Details:**  
+- Groups similar states into clusters to reduce the computational burden in environments with many states.
+- Evaluates how aggregation impacts the accuracy and efficiency of value estimation.
+- Contains experiments that illustrate trade-offs between state resolution and learning performance.
+
+---
+
+### reinforce_short_corridor_baseline_comparison.ipynb
+
+**Purpose:**  
+Compares the REINFORCE policy gradient method with baseline strategies in a “short corridor” environment.
+
+**Details:**  
+- Implements the REINFORCE algorithm and examines the effect of incorporating a baseline to reduce variance.
+- Compares learning performance through reward curves and convergence plots.
+- Provides commentary on how baseline methods can improve policy gradient stability.
+
+---
+
+## Installation & Requirements
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/JCohen72/Reinforcement-Learning.git
+   cd Reinforcement-Learning
+   ```
+
+2. **Install Dependencies**
+
+   Ensure you have Python 3 installed. Then install the required libraries:
+
+   ```bash
+   pip install numpy matplotlib joblib gym
+   ```
+
+   *Note:* Some notebooks might require additional packages as noted in their first cells.
+
+---
 
 ## Usage
 
-1. **Clone the repository**:
+1. **Launch Jupyter Notebook**
 
-```bash
-git clone https://github.com/yourusername/10-armed-bandit-simulations.git
-cd 10-armed-bandit-simulations
-```
+   From the repository’s root directory, start Jupyter:
 
-2. **Run the Optimistic Initial Values Simulation**:
+   ```bash
+   jupyter notebook
+   ```
 
-```bash
-python optimistic_initial_values.py
-```
+2. **Open a Notebook**
 
-This will run the optimistic greedy and realistic epsilon-greedy simulations and plot the percentage of optimal action selections over time.
+   Select any of the 14 project notebooks (e.g., `epsilon_greedy_bandit.ipynb` or `state_aggregation_in_large_scale_td.ipynb`) to explore and run the experiments.
 
-3. **Run the Epsilon-Greedy Agents Simulation**:
+3. **Run the Cells**
 
-```bash
-python epsilon_greedy_bandit.py
-```
-
-This will compare agents with different epsilon values, plotting both the average rewards and the percentage of optimal action selections over time.
-
-## Visualizations
-
-### Optimistic Initial Values Simulation:
-
-- **Optimistic Greedy vs. Realistic ε-Greedy**:
-  - A plot showing how the optimistic initial values affect exploration and the eventual percentage of optimal action selections.
-
-### Epsilon-Greedy Agents Simulation:
-
-- **Average Reward vs. Steps**:
-  - A plot comparing the average rewards obtained by agents using different epsilon values over time.
-  
-- **Optimal Action Percentage vs. Steps**:
-  - A plot comparing how often agents with different epsilon values select the optimal action over time.
-
-## License
-
-This repository is licensed under the MIT License. See the `LICENSE` file for more details.
+   Execute cells sequentially to run simulations, visualize outputs, and experiment with parameters.
 
 ---
+
+## License Details
+
+This repository is licensed under the MIT License. See the [LICENSE](LICENSE) file for full details regarding reuse, modification, and distribution.
